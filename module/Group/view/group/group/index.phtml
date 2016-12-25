@@ -1,0 +1,28 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'My groups';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<p>
+    <a href="<?= $this->url('group', ['action' => 'add']) ?>">Add new group</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($groups as $group) : ?>
+        <tr>
+            <td><?= $this->escapeHtml($group->groupId) ?></td>
+            <td><?= $this->escapeHtml($group->name) ?></td>
+            <td>
+                <a href="<?= $this->url('group', ['action' => 'edit', 'groupId' => $group->groupId]) ?>">Edit</a>
+                <a href="<?= $this->url('group', ['action' => 'delete', 'groupId' => $group->groupId]) ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

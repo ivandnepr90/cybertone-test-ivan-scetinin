@@ -11,6 +11,14 @@
  * file.
  */
 
+require_once __DIR__ . '/../application.run.config.php';
+
 return [
     // ...
+    'db' => [
+        'driver' => 'Pdo',
+        'dsn'    => sprintf('mysql:dbname=%s;host=%s;charset=utf8;', DB_NAME, DB_HOST),
+        'username' => DB_USER,
+        'password' => DB_USER_PASS
+    ],
 ];

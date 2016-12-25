@@ -1,0 +1,38 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'My consumers';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<p>
+    <a href="<?= $this->url('consumer', ['action' => 'add']) ?>">Add new consumer</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>id</th>
+        <th>groupId</th>
+        <th>login</th>
+        <th>password</th>
+        <th>email</th>
+        <th>expirationDateAndTime</th>
+        <th>imageExtention</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($consumers as $consumer) : ?>
+        <tr>
+            <td><?= $this->escapeHtml($consumer->consumerId) ?></td>
+            <td><?= $this->escapeHtml($consumer->groupId) ?></td>
+            <td><?= $this->escapeHtml($consumer->login) ?></td>
+            <td><?= $this->escapeHtml($consumer->password) ?></td>
+            <td><?= $this->escapeHtml($consumer->email) ?></td>
+            <td><?= $this->escapeHtml($consumer->login) ?></td>
+            <td><?= $this->escapeHtml($consumer->imageExtention) ?></td>
+            <td>
+                <a href="<?= $this->url('consumer', ['action' => 'edit', 'consumerId' => $consumer->consumerId]) ?>">Edit</a>
+                <a href="<?= $this->url('consumer', ['action' => 'delete', 'consumerId' => $consumer->consumerId]) ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
