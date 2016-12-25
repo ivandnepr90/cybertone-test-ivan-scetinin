@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Consumer\Controller\ConsumerController;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -20,7 +21,7 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => GroupController::class,
+                        'controller' => ConsumerController::class,
                         'action'     => 'index',
                     ],
                 ],
