@@ -40,6 +40,19 @@ class Consumer
         $this->imageExtention = !empty($data['imageExtention']) ? $data['imageExtention'] : null;
     }
 
+    public function getArrayCopy()
+    {
+        return [
+            'consumerId'     => $this->consumerId,
+            'groupId' => $this->groupId,
+            'login'  => $this->login,
+            'password' => $this -> password,
+            'email' => $this -> email,
+            'expirationDateAndTime' => $this -> expirationDateAndTime,
+            'imageExtention' => $this -> imageExtention
+        ];
+    }
+
     /* Add the following methods: */
 
     public function setInputFilter(InputFilterInterface $inputFilter)

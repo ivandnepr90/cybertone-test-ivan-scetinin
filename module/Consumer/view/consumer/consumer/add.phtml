@@ -6,16 +6,91 @@ $this->headTitle($title);
 ?>
     <h1><?= $this->escapeHtml($title) ?></h1>
 <?php
+
+
+/*$consumerId = $form->get('consumerId');
+$consumerId->setAttribute('class', 'form-control');
+$consumerId->setAttribute('placeholder', 'consumerId');*/
+
+$groupId = $form->get('groupId');
+$groupId->setAttribute('class', 'form-control');
+$groupId->setAttribute('placeholder', 'groupId');
+
+$login = $form->get('login');
+$login->setAttribute('class', 'form-control');
+$login->setAttribute('placeholder', 'login');
+
+$password = $form->get('password');
+$password->setAttribute('class', 'form-control');
+$password->setAttribute('placeholder', 'password');
+
+$email = $form->get('email');
+$email->setAttribute('class', 'form-control');
+$email->setAttribute('placeholder', 'email');
+
+$expirationDateAndTime = $form->get('expirationDateAndTime');
+$expirationDateAndTime->setAttribute('class', 'form-control');
+$expirationDateAndTime->setAttribute('placeholder', 'expirationDateAndTime');
+
+$imageExtention = $form->get('imageExtention');
+$imageExtention->setAttribute('class', 'form-control');
+$imageExtention->setAttribute('placeholder', 'imageExtention');
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
 $form->setAttribute('action', $this->url('consumer', ['action' => 'add']));
 $form->prepare();
 
 echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('consumerId'));
+/*echo $this->formHidden($form->get('consumerId'));
 echo $this->formRow($form->get('groupId'));
 echo $this->formRow($form->get('login'));
 echo $this->formRow($form->get('password'));
 echo $this->formRow($form->get('email'));
 echo $this->formRow($form->get('expirationDateAndTime'));
 echo $this->formRow($form->get('imageExtention'));
-echo $this->formSubmit($form->get('submit'));
+echo $this->formSubmit($form->get('submit'));*/
+?>
+<div class="form-group">
+    <?= $this->formLabel($groupId) ?>
+    <?= $this->formElement($groupId) ?>
+    <?= $this->formElementErrors()->render($groupId, ['class' => 'help-block']) ?>
+</div>
+
+    <div class="form-group">
+        <?= $this->formLabel($login) ?>
+        <?= $this->formElement($login) ?>
+        <?= $this->formElementErrors()->render($login, ['class' => 'help-block']) ?>
+    </div>
+
+    <div class="form-group">
+        <?= $this->formLabel($password) ?>
+        <?= $this->formElement($password) ?>
+        <?= $this->formElementErrors()->render($password, ['class' => 'help-block']) ?>
+    </div>
+
+    <div class="form-group">
+        <?= $this->formLabel($email) ?>
+        <?= $this->formElement($email) ?>
+        <?= $this->formElementErrors()->render($email, ['class' => 'help-block']) ?>
+    </div>
+
+
+    <div class="form-group">
+        <?= $this->formLabel($expirationDateAndTime) ?>
+        <?= $this->formElement($expirationDateAndTime) ?>
+        <?= $this->formElementErrors()->render($expirationDateAndTime, ['class' => 'help-block']) ?>
+    </div>
+
+    <div class="form-group">
+        <?= $this->formLabel($imageExtention) ?>
+        <?= $this->formElement($imageExtention) ?>
+        <?= $this->formElementErrors()->render($imageExtention, ['class' => 'help-block']) ?>
+    </div>
+
+<?php
+
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('consumerId'));
 echo $this->form()->closeTag();

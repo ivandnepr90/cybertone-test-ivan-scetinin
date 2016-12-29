@@ -21,7 +21,7 @@ return [
             'consumer' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' => '/consumer[/:action[/:id]]',
+                    'route' => '/consumer[/:action[/:consumerId]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'consumerId'     => '[0-9]+',

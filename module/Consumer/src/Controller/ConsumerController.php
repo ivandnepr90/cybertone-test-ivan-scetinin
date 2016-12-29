@@ -58,6 +58,43 @@ class ConsumerController extends AbstractActionController
 
     public function editAction()
     {
+        $consumerId = (int) $this->params()->fromRoute('consumerId', 0);
+
+        if (0 === $consumerId) {
+            return $this->redirect()->toRoute('consumer', ['action' => 'add']);
+        }
+
+        // Retrieve the album with the specified id. Doing so raises
+        // an exception if the album is not found, which should result
+        // in redirecting to the landing page.
+        try {
+            $consumer = $this->table->getConsumer($consumerId);
+        } catch (\Exception $e) {
+            return $this->redirect()->toRoute('consumer', ['action' => 'index']);
+        }
+
+        $form = new ConsumerForm();
+        $form->bind($consumer);
+        $form->get('submit')->setAttribute('value', 'Edit');
+
+        $request = $this->getRequest();
+        $viewData = ['consumerId' => $consumerId, 'form' => $form];
+
+        if (! $request->isPost()) {
+            return $viewData;
+        }
+
+        $form->setInputFilter($consumer->getInputFilter());
+        $form->setData($request->getPost());
+
+        if (! $form->isValid()) {
+            return $viewData;
+        }
+
+        $this->table->saveConsumer($consumer);
+
+        // Redirect to album list
+        return $this->redirect()->toRoute('consumer', ['action' => 'index']);
     }
 
     public function deleteAction()
