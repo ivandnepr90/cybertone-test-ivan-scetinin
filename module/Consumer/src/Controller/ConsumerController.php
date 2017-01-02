@@ -99,5 +99,27 @@ class ConsumerController extends AbstractActionController
 
     public function deleteAction()
     {
+        $consumerId = (int) $this->params()->fromRoute('consumerId', 0);
+        if(!$consumerId) {
+            return $this -> redirect()->toRoute('consumer');
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $consumerId = (int) $request->getPost('consumerId');
+                $this->table->deleteConsumer($consumerId);
+            }
+
+            // Redirect to list of albums
+            return $this->redirect()->toRoute('consumer');
+        }
+
+        return [
+            'consumerId'    => $consumerId,
+            'consumer' => $this->table->getConsumer($consumerId),
+        ];
     }
 }

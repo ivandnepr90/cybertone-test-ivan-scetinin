@@ -1,1 +1,22 @@
-<h1>Delete</h1>
+<?php
+// module/Album/view/album/album/delete.phtml:
+
+$title = 'Delete consumer';
+$url   = $this->url('consumer', ['action' => 'delete', 'consumerId' => $consumerId]);
+
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<p>
+    Are you sure that you want to delete
+    "<?= $this->escapeHtml($consumer->login) ?>"
+</p>
+
+<form action="<?= $url ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="consumerId" value="<?= (int) $consumer->consumerId ?>" />
+        <input type="submit" class="btn btn-danger" name="del" value="Yes" />
+        <input type="submit" class="btn btn-success" name="del" value="No" />
+    </div>
+</form>

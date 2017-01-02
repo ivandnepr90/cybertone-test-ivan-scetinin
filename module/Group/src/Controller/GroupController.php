@@ -98,5 +98,27 @@ class GroupController extends AbstractActionController
 
     public function deleteAction()
     {
+        $groupId = (int) $this->params()->fromRoute('groupId', 0);
+        if(!$groupId) {
+            return $this -> redirect()->toRoute('group');
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                //$groupId = (int) $request->getPost('groupId');
+                $this->table->deleteGroup($groupId);
+            }
+
+            // Redirect to list of albums
+            return $this->redirect()->toRoute('group');
+        }
+
+        return [
+            'groupId'    => $groupId,
+            'group' => $this->table->getGroup($groupId),
+        ];
     }
 }
