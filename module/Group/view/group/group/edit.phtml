@@ -1,0 +1,44 @@
+<?php
+// module/Album/view/album/album/add.phtml:
+
+$title = 'Edit group';
+$this->headTitle($title);
+?>
+    <h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+
+
+
+$name = $form->get('name');
+$name->setAttribute('class', 'form-control');
+$name->setAttribute('placeholder', 'name');
+
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$form->setAttribute('action', $this->url('group', ['action' => 'add']));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+/*echo $this->formHidden($form->get('consumerId'));
+echo $this->formRow($form->get('groupId'));
+echo $this->formRow($form->get('login'));
+echo $this->formRow($form->get('password'));
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('expirationDateAndTime'));
+echo $this->formRow($form->get('imageExtention'));
+echo $this->formSubmit($form->get('submit'));*/
+?>
+    <div class="form-group">
+        <?= $this->formLabel($name) ?>
+        <?= $this->formElement($name) ?>
+        <?= $this->formElementErrors()->render($name, ['class' => 'help-block']) ?>
+    </div>
+
+
+<?php
+
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('groupId'));
+echo $this->form()->closeTag();

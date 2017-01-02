@@ -41,7 +41,7 @@ class GroupTable
         return $row;
     }
 
-    public function saveConsumer(Group $group)
+    public function saveGroup(Group $group)
     {
         $data = [
             'groupId' => $group->groupId,
@@ -65,7 +65,7 @@ class GroupTable
         $this->tableGateway->update($data, ['groupId' => $groupId]);
     }
 
-    public function deleteConsumer($groupId)
+    public function deleteGroup($groupId)
     {
         $this->tableGateway->delete(['groupId' => (int)$groupId]);
     }

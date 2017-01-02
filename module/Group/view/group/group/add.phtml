@@ -1,0 +1,43 @@
+<?php
+// module/Album/view/album/album/add.phtml:
+
+$title = 'Add new group';
+$this->headTitle($title);
+?>
+    <h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+
+
+/*$consumerId = $form->get('consumerId');
+$consumerId->setAttribute('class', 'form-control');
+$consumerId->setAttribute('placeholder', 'consumerId');*/
+
+/*$groupId = $form->get('groupId');
+$groupId->setAttribute('class', 'form-control');
+$groupId->setAttribute('placeholder', 'groupId');*/
+
+$name = $form->get('name');
+$name->setAttribute('class', 'form-control');
+$name->setAttribute('placeholder', 'name');
+
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$form->setAttribute('action', $this->url('group', ['action' => 'add']));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+
+    <div class="form-group">
+        <?= $this->formLabel($name) ?>
+        <?= $this->formElement($name) ?>
+        <?= $this->formElementErrors()->render($name, ['class' => 'help-block']) ?>
+    </div>
+
+<?php
+
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('groupId'));
+echo $this->form()->closeTag();

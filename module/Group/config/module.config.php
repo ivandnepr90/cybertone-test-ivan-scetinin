@@ -21,7 +21,7 @@ return [
             'group' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' => '/group[/:action[/:id]]',
+                    'route' => '/group[/:action[/:groupId]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'groupId'     => '[0-9]+',
