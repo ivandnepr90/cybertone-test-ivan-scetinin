@@ -28,7 +28,7 @@ $this->headTitle($title);
             <td><?= $this->escapeHtml($consumer->login) ?></td>
             <td><?= $this->escapeHtml($consumer->password) ?></td>
             <td><?= $this->escapeHtml($consumer->email) ?></td>
-            <td><?= $this->escapeHtml($consumer->login) ?></td>
+            <td><?= $this->escapeHtml($consumer->expirationDateAndTime) ?></td>
             <td><?= $this->escapeHtml($consumer->imageExtention) ?></td>
             <td>
                 <a href="<?= $this->url('consumer', ['action' => 'edit', 'consumerId' => $consumer->consumerId]) ?>">Edit</a>
