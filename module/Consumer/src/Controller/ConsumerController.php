@@ -8,6 +8,7 @@
 
 namespace Consumer\Controller;
 
+require_once __DIR__ . '/../../../../config/application.run.config.php';
 
 use Consumer\Form\ConsumerForm;
 use Consumer\Model\Consumer;
@@ -59,7 +60,17 @@ class ConsumerController extends AbstractActionController
 
         $consumer = new Consumer();
         $form->setInputFilter($consumer->getInputFilter());
-        $form->setData($request->getPost());
+
+        $post = array_merge_recursive(
+            $request->getPost()->toArray(),
+            $request->getFiles()->toArray()
+        );
+
+        $newFilePath = CONSUMER_PHOTOS_PATH . $post['consumerId'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
+        copy($post['imageExtention']['tmp_name'], $newFilePath);
+        $post['imageExtention'] = $newFilePath;
+
+        $form->setData($post);
 
         if (! $form->isValid()) {
             return ['form' => $form];
@@ -99,7 +110,17 @@ class ConsumerController extends AbstractActionController
         }
 
         $form->setInputFilter($consumer->getInputFilter());
-        $form->setData($request->getPost());
+
+        $post = array_merge_recursive(
+            $request->getPost()->toArray(),
+            $request->getFiles()->toArray()
+        );
+
+        $newFilePath = CONSUMER_PHOTOS_PATH . $post['consumerId'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
+        copy($post['imageExtention']['tmp_name'], $newFilePath);
+        $post['imageExtention'] = $newFilePath;
+
+        $form->setData($post);
 
         if (! $form->isValid()) {
             return $viewData;

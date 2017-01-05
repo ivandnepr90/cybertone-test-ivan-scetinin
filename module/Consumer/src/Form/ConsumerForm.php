@@ -51,19 +51,28 @@ class ConsumerForm extends Form
         ]);
         $this->add([
             'name' => 'expirationDateAndTime',
-            'type' => 'Zend\Form\Element\Date',
+            'type' => 'Zend\Form\Element\DateTime',
             'options' => [
                 'label' => 'expirationDateAndTime',
-                'format' => 'Y-m-d'
+               // 'format' => 'Y-m-d'
             ],
         ]);
-        $this->add([
+        /*$this->add([
             'name' => 'imageExtention',
             'type' => 'text',
             'options' => [
                 'label' => 'imageExtention',
             ],
+        ]);*/
+
+        $this -> add([
+            'name' => 'imageExtention',
+            'type' => 'Zend\Form\Element\File',
+            'options' => [
+                'label' => 'imageExtention',
+            ],
         ]);
+
         $this->add([
             'name' => 'submit',
             'type' => 'submit',
