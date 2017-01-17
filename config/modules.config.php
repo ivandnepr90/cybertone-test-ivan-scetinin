@@ -30,5 +30,6 @@ return [
     'Zend\Validator',
     'Application',
     'Group',
-    'Consumer'
+    'Consumer',
+    'Auth'
 ];

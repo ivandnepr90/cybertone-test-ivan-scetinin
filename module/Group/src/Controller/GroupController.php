@@ -26,6 +26,8 @@ class GroupController extends AbstractActionController
 
     public function indexAction()
     {
+        $this -> checkIdentity();
+
         return new ViewModel([
             'groups' => $this->table->fetchAll(),
         ]);
@@ -33,6 +35,8 @@ class GroupController extends AbstractActionController
 
     public function addAction()
     {
+        $this -> checkIdentity();
+
         $form = new GroupForm();
         $form->get('submit')->setValue('add');
 
@@ -57,6 +61,8 @@ class GroupController extends AbstractActionController
 
     public function editAction()
     {
+        $this -> checkIdentity();
+
         $groupId = (int) $this->params()->fromRoute('groupId', 0);
 
         if (0 === $groupId) {
@@ -98,6 +104,8 @@ class GroupController extends AbstractActionController
 
     public function deleteAction()
     {
+        $this -> checkIdentity();
+
         $groupId = (int) $this->params()->fromRoute('groupId', 0);
         if(!$groupId) {
             return $this -> redirect()->toRoute('group');
@@ -120,5 +128,11 @@ class GroupController extends AbstractActionController
             'groupId'    => $groupId,
             'group' => $this->table->getGroup($groupId),
         ];
+    }
+
+    protected function checkIdentity() {
+        if(!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
     }
 }

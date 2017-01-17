@@ -21,4 +21,9 @@ return [
         'username' => DB_USER,
         'password' => DB_USER_PASS
     ],
+
+    'modules_layouts' => [
+        'Auth' => 'layout/login'
+    ],
+    'Zend\DB\Adapter\Adapter' => 'Zend\DB\Adapter\AdapterServiceFactory'
 ];

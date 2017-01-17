@@ -34,7 +34,7 @@ class Consumer
         $this->consumerId = !empty($data['consumerId']) ? $data['consumerId'] : null;
         $this->groupId = !empty($data['groupId']) ? $data['groupId'] : null;
         $this->login = !empty($data['login']) ? $data['login'] : null;
-        $this->password = !empty($data['password']) ? $data['password'] : null;
+        $this->password = !empty($data['password']) ? md5($data['password']) : null;
         $this->email = !empty($data['email']) ? $data['email'] : null;
         $this->expirationDateAndTime = !empty($data['expirationDateAndTime']) ? $data['expirationDateAndTime'] : null;
         $this->imageExtention = !empty($data['imageExtention']) ? $data['imageExtention'] : null;
@@ -72,7 +72,7 @@ class Consumer
         $inputFilter = new InputFilter();
 
         $inputFilter->add([
-            'name' => 'consumerId',
+            'name' => 'groupId',
             'required' => true,
             'filters' => [
                 ['name' => ToInt::class],

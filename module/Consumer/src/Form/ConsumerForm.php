@@ -54,7 +54,7 @@ class ConsumerForm extends Form
             'type' => 'Zend\Form\Element\DateTime',
             'options' => [
                 'label' => 'expirationDateAndTime',
-               // 'format' => 'Y-m-d'
+                'format' => 'Y-m-d'
             ],
         ]);
         /*$this->add([

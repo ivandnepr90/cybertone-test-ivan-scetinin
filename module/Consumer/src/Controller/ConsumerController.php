@@ -16,6 +16,7 @@ use Consumer\Model\ConsumerTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+
 class ConsumerController extends AbstractActionController
 {
     private $table;
@@ -25,14 +26,9 @@ class ConsumerController extends AbstractActionController
         $this->table = $table;
     }
 
-
     public function indexAction()
     {
-        /*return new ViewModel([
-            'consumers' => $this->table->fetchAll(),
-        ]);*/
-
-
+        $this -> checkIdentity();
         $paginator = $this->table->fetchAll(true);
 
         // Set the current page to what has been passed in query string,
@@ -49,6 +45,7 @@ class ConsumerController extends AbstractActionController
 
     public function addAction()
     {
+        $this -> checkIdentity();
         $form = new ConsumerForm();
         $form->get('submit')->setValue('add');
 
@@ -66,15 +63,24 @@ class ConsumerController extends AbstractActionController
             $request->getFiles()->toArray()
         );
 
-        $newFilePath = CONSUMER_PHOTOS_PATH . $post['consumerId'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
+        $form->setData($post);
+
+        $existConsumer = $this -> table -> getConsumerByCondition(['login' => $post['login']]);
+        if(!empty($existConsumer)) {
+            $form -> get('login') -> setMessages(['login is already exist']);
+            return ['form' => $form];
+        }
+
+        $newFilePath = CONSUMER_PHOTOS_PATH . $post['login'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
         copy($post['imageExtention']['tmp_name'], $newFilePath);
         $post['imageExtention'] = $newFilePath;
 
         $form->setData($post);
 
-        if (! $form->isValid()) {
+        if (!$form->isValid()) {
             return ['form' => $form];
         }
+
 
         $consumer->exchangeArray($form->getData());
         $this->table->saveConsumer($consumer);
@@ -83,6 +89,7 @@ class ConsumerController extends AbstractActionController
 
     public function editAction()
     {
+        $this -> checkIdentity();
         $consumerId = (int) $this->params()->fromRoute('consumerId', 0);
 
         if (0 === $consumerId) {
@@ -94,6 +101,7 @@ class ConsumerController extends AbstractActionController
         // in redirecting to the landing page.
         try {
             $consumer = $this->table->getConsumer($consumerId);
+            $consumer->expirationDateAndTime = date('Y-m-d', strtotime($consumer->expirationDateAndTime));
         } catch (\Exception $e) {
             return $this->redirect()->toRoute('consumer', ['action' => 'index']);
         }
@@ -116,9 +124,14 @@ class ConsumerController extends AbstractActionController
             $request->getFiles()->toArray()
         );
 
-        $newFilePath = CONSUMER_PHOTOS_PATH . $post['consumerId'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
-        copy($post['imageExtention']['tmp_name'], $newFilePath);
-        $post['imageExtention'] = $newFilePath;
+        if(empty($post['imageExtention'])) {
+            unset($post['imageExtention']);
+        } else {
+            $newFilePath = CONSUMER_PHOTOS_PATH . $post['login'] . '.' .pathinfo(basename($post['imageExtention']['name']), PATHINFO_EXTENSION);
+            copy($post['imageExtention']['tmp_name'], $newFilePath);
+            $post['imageExtention'] = $newFilePath;
+        }
+
 
         $form->setData($post);
 
@@ -134,6 +147,7 @@ class ConsumerController extends AbstractActionController
 
     public function deleteAction()
     {
+        $this -> checkIdentity();
         $consumerId = (int) $this->params()->fromRoute('consumerId', 0);
         if(!$consumerId) {
             return $this -> redirect()->toRoute('consumer');
@@ -156,5 +170,11 @@ class ConsumerController extends AbstractActionController
             'consumerId'    => $consumerId,
             'consumer' => $this->table->getConsumer($consumerId),
         ];
+    }
+
+    protected function checkIdentity() {
+        if(!$this->identity()) {
+            return $this->redirect()->toRoute('login');
+        }
     }
 }

@@ -1,0 +1,16 @@
+<table class="table">
+    <?php
+    foreach ($users as $user) : ?>
+        <?php extract($user->toArray()); ?>
+            <tr>
+                <td><?=$id?></td>
+                <td><?=$name?></td>
+                <td><?=$email?></td>
+                <td><?=$created?></td>
+                <td><a class="btn btn-success" href="<?=$this->url('auth', ['action' => 'update', 'id' => $id])?>">Edit</a></td>
+                <td><a class="btn btn-danger" href="<?=$this->url('auth', ['action' => 'delete', 'id' => $id])?>">Delete</a></td>
+                <td></td>
+            </tr>
+        <?php endforeach; ?>
+</table>
+

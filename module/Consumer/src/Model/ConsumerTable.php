@@ -71,6 +71,17 @@ class ConsumerTable
         return $row;
     }
 
+    public function getConsumerByCondition(Array $condition) {
+        $rowset = $this->tableGateway->select($condition);
+        $row = $rowset->current();
+
+        if (!$row) {
+            return false;
+        }
+
+        return $row;
+    }
+
     public function saveConsumer(Consumer $consumer)
     {
         $data = [
@@ -92,12 +103,13 @@ class ConsumerTable
 
         if (!$this->getConsumer($consumerId)) {
             throw new RuntimeException(sprintf(
-                'Cannot update album with identifier %d; does not exist',
+                'Cannot update consumer with identifier %d; does not exist',
                 $consumerId
             ));
         }
 
         $this->tableGateway->update($data, ['consumerId' => $consumerId]);
+        return $consumerId;
     }
 
     public function deleteConsumer($consumerId)
